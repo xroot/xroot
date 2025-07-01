@@ -1,5 +1,5 @@
-import pygame
 from modules.settings import BOARD_DIMENSION, DELTA
+
 
 class DisplayManager:
     def __init__(self, screen):
