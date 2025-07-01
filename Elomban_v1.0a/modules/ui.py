@@ -51,7 +51,7 @@ class UIManager:
         # La marge à droite est aussi dynamique.
         margin_right = DELTA * tile_size
 
-        self.start_x = self.display_manager.board_offset_x + grid_width_pixels + margin_right
+        self.start_x = self.display_manager.zone_jeu_width + int(tile_size * DELTA)
         self.start_y = self.display_manager.board_offset_y
         self.line_spacing = int(tile_size * 0.7)
 
