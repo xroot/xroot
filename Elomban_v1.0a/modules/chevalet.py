@@ -1,13 +1,17 @@
 import pygame
 import os
 
+from modules.settings import ASSET_PATH
+
 # À adapter si la structure diffère
-HAND_HOLDER_PATH = os.path.join("assets", "images", "background", "hand_holder.png")
+HAND_HOLDER_PATH = os.path.join(ASSET_PATH, "background", "hand_holder.png")
+
 
 class ChevaletDrawer:
     """
     Dessine le chevalet du joueur, avec fond image.
     """
+
     def __init__(self, display_manager, screen):
         self.display_manager = display_manager
         self.screen = screen
@@ -17,7 +21,8 @@ class ChevaletDrawer:
         # Redimensionnement de l'image pour coller à la largeur du plateau
         self.hand_holder_img = pygame.transform.smoothscale(
             self.hand_holder_img,
-            (int(self.display_manager.total_board_width_pixels), int(self.display_manager.tile_size * self.display_manager.CHEVALET_HEIGHT_TILES))
+            (int(self.display_manager.total_board_width_pixels),
+             int(self.display_manager.tile_size * self.display_manager.CHEVALET_HEIGHT_TILES))
         )
 
     def draw(self, player):
