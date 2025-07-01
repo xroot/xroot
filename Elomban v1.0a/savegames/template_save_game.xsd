@@ -1,0 +1,69 @@
+<?xml version = "1.0" encoding="UTF-8" ?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<!-- Declaration of elements with restrictions -->
+	<xsd:element name="Board_state">	        		
+		<xsd:complexType>
+			<xsd:sequence>
+
+			<xsd:element name="Row" minOccurs="15" maxOccurs="15">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:normalizedString">
+		      			<xsd:maxLength value="15" />
+		      			<xsd:pattern value="([A-Z\*?])*"/>
+		    		</xsd:restriction>
+		  		</xsd:simpleType>
+			</xsd:element>
+
+			</xsd:sequence>
+		</xsd:complexType>		
+	</xsd:element>
+
+	<xsd:element name="Hand">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:normalizedString">
+      			<xsd:maxLength value="7"/>
+      			<xsd:pattern value="([A-Z\*])*"/>
+    		</xsd:restriction>
+  		</xsd:simpleType>
+	</xsd:element>
+
+
+	<!-- Complete XML schema -->
+	<xsd:element name="Scrabble_savegame">
+	    <xsd:complexType>
+	        <xsd:sequence>
+
+	        	<xsd:element name="Players">
+	        		<xsd:complexType>
+	        			<xsd:sequence>
+
+	        				<xsd:element name="Player" maxOccurs="8">
+	        					<xsd:complexType>
+	        						<xsd:sequence>
+
+										<xsd:element name="Name" type="xsd:normalizedString"/>
+										<xsd:element ref="Hand"/>
+										<xsd:element name="Score" type="xsd:positiveInteger"/>
+
+	        						</xsd:sequence>	        					
+	        					</xsd:complexType>
+	        				</xsd:element>
+
+	        			</xsd:sequence>
+	        		</xsd:complexType>
+	        	</xsd:element>
+
+	        	<xsd:element ref="Board_state"/>
+
+
+	        	<xsd:element name="Bag_of_letters" type="xsd:normalizedString"/>
+
+	        </xsd:sequence>
+	        <xsd:attribute name="timestamp" type="xsd:dateTime" use="required"/>
+	    </xsd:complexType>
+
+	</xsd:element>
+
+</xsd:schema>
