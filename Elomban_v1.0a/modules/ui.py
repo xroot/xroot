@@ -1,8 +1,6 @@
 import pygame
 
-# On importe les "plans" (constantes de design) depuis notre source unique de vérité.
 from modules.settings import BOARD_DIMENSION, DELTA
-
 
 class UIManager:
     """
@@ -11,20 +9,11 @@ class UIManager:
     """
 
     def __init__(self, screen, display_manager):
-        """
-        Initialise le gestionnaire d'UI.
-
-        Args:
-            screen (pygame.Surface): La surface principale sur laquelle dessiner.
-            display_manager (DisplayManager): L'objet qui a déjà calculé toutes les dimensions.
-        """
         self.screen = screen
         self.display_manager = display_manager
 
-        # --- On récupère les dimensions dynamiques depuis le DisplayManager ---
         tile_size = self.display_manager.tile_size
 
-        # --- Polices de caractères dynamiques ---
         try:
             self.font_title = pygame.font.SysFont("calibri", int(tile_size * 0.55), bold=True)
             self.font_normal = pygame.font.SysFont("calibri", int(tile_size * 0.45))
@@ -32,19 +21,16 @@ class UIManager:
             self.font_title = pygame.font.SysFont("arial", int(tile_size * 0.55), bold=True)
             self.font_normal = pygame.font.SysFont("arial", int(tile_size * 0.45))
 
-        # --- Couleurs ---
         self.color_title = (255, 255, 255)
         self.color_text = (220, 220, 220)
+        self.panel_bg = (40, 50, 70, 230)  # fond translucide (RGBA, alpha ignoré si pas de surface convert_alpha)
 
-        # --- Calcul de position dynamique ---
         self.start_x = self.display_manager.zone_jeu_width + int(tile_size * DELTA)
         self.start_y = self.display_manager.board_offset_y
         self.line_spacing = int(tile_size * 0.7)
+        self.panel_width = 340
 
     def draw_game_info(self, player, bag):
-        """
-        Dessine toutes les informations de jeu pour le tour actuel.
-        """
         player_hand_str = ', '.join(sorted([l.character for l in player.hand.sprites()]))
         info_lines = [
             f"Tour de : {player.name}",
@@ -63,14 +49,12 @@ class UIManager:
 
             text_surface = font_to_use.render(line, True, color_to_use)
             text_rect = text_surface.get_rect(topleft=(self.start_x, self.start_y + i * self.line_spacing))
-
             self.screen.blit(text_surface, text_rect)
 
     def draw_welcome_panel(self):
         """
         Affiche le panneau d'accueil (menu principal) à droite lors du lancement du jeu.
         """
-        # Contenu du header et menu
         header = "Elomban | Scrab v1.0a - Buña bwà bwàm"
         menu_items = [
             "Nouveau jeu",
@@ -81,21 +65,25 @@ class UIManager:
             "Quitter"
         ]
 
-        # Positionnement de départ
-        y = self.start_y
         x = self.start_x
+        y = self.start_y
 
-        # Affichage du header (nom du jeu, version, slogan)
+        # --- Fond du panneau ---
+        panel_height = self.line_spacing * (2 + len(menu_items)) + 60
+        panel_rect = pygame.Rect(x - 10, y - 10, self.panel_width, panel_height)
+        pygame.draw.rect(self.screen, (40, 50, 70), panel_rect, border_radius=10)
+
+        # --- Titre (header) ---
         text_surface = self.font_title.render(header, True, self.color_title)
-        self.screen.blit(text_surface, (x, y))
+        self.screen.blit(text_surface, (x + 10, y))
         y += self.line_spacing + 10
 
-        # Séparateur visuel (optionnel)
-        pygame.draw.line(self.screen, (180, 180, 180), (x, y), (x + 320, y), 2)
+        # --- Séparateur visuel ---
+        pygame.draw.line(self.screen, (180, 180, 180), (x + 10, y), (x + self.panel_width - 20, y), 2)
         y += 20
 
-        # Affichage des options du menu
+        # --- Items du menu ---
         for item in menu_items:
             text_surface = self.font_normal.render(f"▶ {item}", True, self.color_text)
-            self.screen.blit(text_surface, (x + 10, y))
+            self.screen.blit(text_surface, (x + 20, y))
             y += self.line_spacing

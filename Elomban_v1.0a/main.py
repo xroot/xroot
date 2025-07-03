@@ -6,12 +6,11 @@ from configparser import ConfigParser
 from modules.game_logic import Game
 from modules.display import DisplayManager
 from modules.settings import GREEN_BOARD
+from modules.ui import UIManager
 
 
 def load_display_config():
-    """
-    Charge la configuration d'affichage depuis config/display_settings.ini
-    """
+    # ... inchangé ...
     parser = ConfigParser()
     try:
         parser.read('config/display_settings.ini', encoding='utf-8')
@@ -22,16 +21,12 @@ def load_display_config():
         }
     except Exception as e:
         print(f"Erreur lors de la lecture du fichier de config : {e}")
-        # Configuration de secours
         config = {'fullscreen': False, 'width': 1280, 'height': 720}
 
     return config
 
 
 def main():
-    """
-    Fonction principale qui initialise et lance le jeu.
-    """
     pygame.init()
 
     # 1. Charger la configuration de l'affichage
@@ -48,33 +43,42 @@ def main():
     # 3. Créer le gestionnaire d'affichage qui calcule TOUTES les dimensions
     display_manager = DisplayManager(screen)
 
-    # 4. Créer l'instance du jeu en lui passant l'écran ET le gestionnaire de dimensions
+    # 4. Créer l'instance du gestionnaire d'UI
+    ui_manager = UIManager(screen, display_manager)  # <------ AJOUT
+
+    # 5. Créer l'instance du jeu
     game = Game(screen, display_manager)
 
     # --- BOUCLE DE JEU PRINCIPALE ---
     clock = pygame.time.Clock()
+
+    etat_jeu = "accueil"  # <------ AJOUT : état du jeu (accueil/menu ou jeu lancé)
+
     while game.running:
-        # Gérer les événements utilisateur
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game.running = False
 
-            # Passer les événements à la logique du jeu pour qu'elle les traite
-            #game.handle_event(event)
+            # Si tu veux plus tard gérer le clic sur "Nouveau jeu", tu pourras changer cet état ici
+            # if etat_jeu == "accueil":
+            #     ... gestion des clics menu ...
+            # else:
+            #     game.handle_event(event)
 
         # Mettre à jour l'état du jeu
-        game.update()
+        if etat_jeu != "accueil":
+            game.update()
 
         # Effacer l'écran précédent
-        screen.fill((GREEN_BOARD ))  # Fond noir par défaut
+        screen.fill(GREEN_BOARD)
 
-        # Dessiner la nouvelle frame
-        game.draw()
+        # --- Afficher le bon panneau selon l'état ---
+        if etat_jeu == "accueil":
+            ui_manager.draw_welcome_panel()
+        else:
+            game.draw()
 
-        # Mettre à jour l'affichage
         pygame.display.flip()
-
-        # Limiter la vitesse du jeu à 60 images par seconde
         clock.tick(60)
 
     pygame.quit()

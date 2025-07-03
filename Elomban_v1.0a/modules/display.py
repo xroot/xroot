@@ -35,8 +35,8 @@ class DisplayManager:
         self.hand_holder_height = self.tile_size * 1.2
 
         # Offsets initiaux
-        self.hand_holder_offset_x = 0
-        self.hand_holder_offset_y = 10
+        self.hand_holder_offset_x = -300
+        self.hand_holder_offset_y = 5
 
         # Initialisation position chevalet et rect
         self.update_hand_holder_position()
