@@ -94,7 +94,7 @@ class Game:
             pygame.draw.rect(self.screen, (90, 90, 90), self.display_manager.hand_holder_rect, border_radius=8)
 
         # --- CHEVALET ACTUEL ---
-        self.current_player.draw_hand(self.screen)
+        self.current_player.draw_hand(self.screen, self.display_manager)
 
         # --- TEXTE UI ---
         self.ui_manager.draw_game_info(self.current_player, self.bag)
