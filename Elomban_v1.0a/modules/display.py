@@ -14,10 +14,8 @@ class DisplayManager:
         # dimensions "bloc" vertical (plateau + chevalet)
         total_units_vertical = BOARD_DIMENSION + (2 * DELTA) + self.CHEVALET_HEIGHT_TILES
 
-        # Taille max possible d'une tuile pour que tout tienne dans la zone verte
-        max_tile_size_horiz = int(self.zone_jeu_width / total_units_horizontal)
-        max_tile_size_vert = int(self.screen_height / total_units_vertical)
-        self.tile_size = min(max_tile_size_vert, max_tile_size_horiz)
+        # La tuile prend toute la largeur de la zone verte (plus de marge horizontale)
+        self.tile_size = int(self.zone_jeu_width / total_units_horizontal)
 
         # recalcul des dimensions réelles utilisées
         total_board_width_pixels = total_units_horizontal * self.tile_size
@@ -26,8 +24,8 @@ class DisplayManager:
 
         bloc_total_height = total_board_height_pixels + chevalet_height_pixels
 
-        # CENTRAGE horizontal dans la zone verte
-        self.board_offset_x = int((self.zone_jeu_width - total_board_width_pixels) / 2)
+        # Plateau collé à gauche de la zone verte
+        self.board_offset_x = 0
         # CENTRAGE vertical dans la fenêtre pour tout le bloc (plateau+chevalet)
         self.board_offset_y = int((self.screen_height - bloc_total_height) / 2)
 
