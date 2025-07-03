@@ -30,9 +30,9 @@ class DisplayManager:
         self.total_board_height_pixels = BOARD_DIMENSION * self.tile_size
 
         # --- CHEVALET : position & dimension ---
-        self.letters_per_hand = 8  # Peut venir d'un .ini
+        self.NUMBER_OF_LETTERS_PER_HAND = 8  # Peut venir d'un .ini
 
-        self.hand_holder_width = self.tile_size * (self.letters_per_hand + 0.5)
+        self.hand_holder_width = self.tile_size * (self.NUMBER_OF_LETTERS_PER_HAND + 0.5)
         self.hand_holder_height = self.tile_size * 1.2
 
         self.hand_holder_x = (self.screen_width - self.hand_holder_width) / 2
