@@ -43,7 +43,7 @@ def main():
         flags |= pygame.FULLSCREEN
 
     screen = pygame.display.set_mode((display_config['width'], display_config['height']), flags)
-    pygame.display.set_caption("Elomban")
+    pygame.display.set_caption("🧠 Elomban | Scrab v1.0a")
 
     # 3. Créer le gestionnaire d'affichage qui calcule TOUTES les dimensions
     display_manager = DisplayManager(screen)
