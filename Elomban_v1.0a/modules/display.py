@@ -41,15 +41,15 @@ class DisplayManager:
         # Initialisation position chevalet et rect
         self.update_hand_holder_position()
 
-        print("-" * 20)
-        print("DisplayManager Initialisé :")
-        print(f"  Taille écran : {self.screen_width}x{self.screen_height}")
-        print(f"  Taille tuile : {self.tile_size}")
-        print(f"  Plateau offset X : {self.board_offset_x}")
-        print(f"  Plateau offset Y : {self.board_offset_y}")
-        print(f"  Plateau W x H : {self.total_board_width_pixels} x {self.total_board_height_pixels}")
-        print(f"  Chevalet position : ({self.hand_holder_x}, {self.hand_holder_y})")
-        print("-" * 20)
+        # print("-" * 20)
+        # print("DisplayManager Initialisé :")
+        # print(f"  Taille écran : {self.screen_width}x{self.screen_height}")
+        # print(f"  Taille tuile : {self.tile_size}")
+        # print(f"  Plateau offset X : {self.board_offset_x}")
+        # print(f"  Plateau offset Y : {self.board_offset_y}")
+        # print(f"  Plateau W x H : {self.total_board_width_pixels} x {self.total_board_height_pixels}")
+        # print(f"  Chevalet position : ({self.hand_holder_x}, {self.hand_holder_y})")
+        # print("-" * 20)
 
     def update_hand_holder_position(self):
         """
