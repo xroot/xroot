@@ -1,4 +1,3 @@
-# modules/display_manager.py
 import pygame
 
 from modules.settings import BOARD_DIMENSION, DELTA, NUMBER_OF_LETTERS_PER_HAND
@@ -37,7 +36,7 @@ class DisplayManager:
 
         # Offsets initiaux
         self.hand_holder_offset_x = 0
-        self.hand_holder_offset_y = 0
+        self.hand_holder_offset_y = 10
 
         # Initialisation position chevalet et rect
         self.update_hand_holder_position()
@@ -73,3 +72,25 @@ class DisplayManager:
         self.hand_holder_offset_x = offset_x
         self.hand_holder_offset_y = offset_y
         self.update_hand_holder_position()
+
+    def get_hand_letter_position(self, index):
+        """
+        Retourne la position (x, y) en pixels de la lettre d'index donné dans la main pour qu'elle soit centrée sur le chevalet.
+        À utiliser partout où une lettre est placée/replacée sur le hand holder.
+        Args:
+            index (int): index de la lettre dans la main (de 0 à NUMBER_OF_LETTERS_PER_HAND - 1)
+        Returns:
+            (float, float): position x, y en pixels pour placer la lettre
+        """
+        # Décalage léger à gauche pour que ce soit bien visuellement (marge)
+        offset_x = self.hand_holder_x + 0.1 * self.tile_size
+        offset_y = self.hand_holder_y + 0.1 * self.tile_size
+        return (
+            offset_x + index * self.tile_size,
+            offset_y
+        )
+
+# Utilisation recommandée dans le code du jeu :
+# for i, lettre in enumerate(main_du_joueur):
+#     x, y = display_manager.get_hand_letter_position(i)
+#     lettre.move_to(x, y)

@@ -1,4 +1,3 @@
-# modules/player.py
 import pygame
 
 
@@ -27,53 +26,20 @@ class Player:
 
     def rearrange_hand(self):
         """
-        Aligne proprement les lettres de la main, en calculant un espacement correct.
+        Centre les lettres sur le chevalet via display_manager.get_hand_letter_position.
         """
-        tile_size = self.display_manager.tile_size
-
-        # --- LA MODIFICATION CLÉ POUR LE CHEVALET ---
-
-        # 1. On définit un espacement clair entre les lettres (ex: 10% de la taille d'une tuile)
-        spacing = int(tile_size * 1.1)
-
-        # 2. On calcule la largeur totale requise pour la main
-        hand_width_pixels = self.letters_per_hand * tile_size + (self.letters_per_hand - 1) * (spacing - tile_size)
-
-        # 3. On calcule la position de départ pour centrer ce bloc
-        start_x = (self.display_manager.screen_width - hand_width_pixels) / 2
-
-        # 4. On ajuste la position verticale pour qu'elle soit plus esthétique
-        start_y = self.display_manager.screen_height - (2.2 * tile_size)
-
         for i, letter_sprite in enumerate(self.hand.sprites()):
-            # La position de chaque lettre est maintenant calculée avec un espacement fixe.
-            letter_sprite.rect.topleft = (start_x + (i * spacing), start_y)
+            x, y = self.display_manager.get_hand_letter_position(i)
+            letter_sprite.rect.topleft = (x, y)
 
     def draw_hand(self, surface, display_manager):
-        """
-        Dessine la main du joueur sur la surface donnée, en suivant la position du chevalet.
-        """
         if not self.hand:
             return
 
-        # Décalage du chevalet vers la droite et vers le haut
-        display_manager.set_hand_holder_offset(1, 20)
-
-        # Point de départ horizontal pour le dessin des pièces (légèrement décalé pour centrer dans le chevalet)
-        x_start = display_manager.hand_holder_x + 0.25 * display_manager.tile_size
-
-        # Décalage vertical pour aligner les pièces avec le fond du chevalet
-        y = display_manager.hand_holder_y + 0.25 * display_manager.tile_size
-
-        # Espacement entre les pièces (tuile + marge)
-        spacing = int(display_manager.tile_size * 1.1)
-
         for i, letter_sprite in enumerate(self.hand.sprites()):
             if letter_sprite:
-                letter_sprite.rect.topleft = (
-                    x_start + i * spacing,
-                    y
-                )
+                x, y = display_manager.get_hand_letter_position(i)
+                letter_sprite.rect.topleft = (x, y)
                 surface.blit(letter_sprite.image, letter_sprite.rect)
 
     def __repr__(self):
