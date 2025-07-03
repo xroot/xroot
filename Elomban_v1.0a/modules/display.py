@@ -1,10 +1,12 @@
 # modules/display_manager.py
+import pygame
 
-from modules.settings import BOARD_DIMENSION, DELTA
+from modules.settings import BOARD_DIMENSION, DELTA, NUMBER_OF_LETTERS_PER_HAND
 
 
 class DisplayManager:
     def __init__(self, screen):
+        self.NUMBER_OF_LETTERS_PER_HAND = NUMBER_OF_LETTERS_PER_HAND
         self.screen_width, self.screen_height = screen.get_size()
         self.FRACTION_JEU = 1.0  # Si tu veux toute la largeur, sinon 0.7
         self.zone_jeu_width = int(self.screen_width * self.FRACTION_JEU)
@@ -30,21 +32,15 @@ class DisplayManager:
         self.total_board_height_pixels = BOARD_DIMENSION * self.tile_size
 
         # --- CHEVALET : position & dimension ---
-        self.NUMBER_OF_LETTERS_PER_HAND = 8  # Peut venir d'un .ini
-
         self.hand_holder_width = self.tile_size * (self.NUMBER_OF_LETTERS_PER_HAND + 0.5)
         self.hand_holder_height = self.tile_size * 1.2
 
-        self.hand_holder_x = (self.screen_width - self.hand_holder_width) / 2
-        self.hand_holder_y = self.board_offset_y + self.total_board_height_pixels + 0.5 * self.tile_size
+        # Offsets initiaux
+        self.hand_holder_offset_x = 0
+        self.hand_holder_offset_y = 0
 
-        import pygame
-        self.hand_holder_rect = pygame.Rect(
-            self.hand_holder_x,
-            self.hand_holder_y,
-            self.hand_holder_width,
-            self.hand_holder_height
-        )
+        # Initialisation position chevalet et rect
+        self.update_hand_holder_position()
 
         print("-" * 20)
         print("DisplayManager Initialisé :")
@@ -55,3 +51,25 @@ class DisplayManager:
         print(f"  Plateau W x H : {self.total_board_width_pixels} x {self.total_board_height_pixels}")
         print(f"  Chevalet position : ({self.hand_holder_x}, {self.hand_holder_y})")
         print("-" * 20)
+
+    def update_hand_holder_position(self):
+        """
+        Met à jour la position du chevalet et son rectangle en tenant compte des offsets.
+        """
+        self.hand_holder_x = (self.screen_width - self.hand_holder_width) / 2 + self.hand_holder_offset_x
+        self.hand_holder_y = self.screen_height - self.hand_holder_height - self.hand_holder_offset_y
+
+        self.hand_holder_rect = pygame.Rect(
+            self.hand_holder_x,
+            self.hand_holder_y,
+            self.hand_holder_width,
+            self.hand_holder_height
+        )
+
+    def set_hand_holder_offset(self, offset_x, offset_y):
+        """
+        Change les offsets du chevalet et met à jour sa position.
+        """
+        self.hand_holder_offset_x = offset_x
+        self.hand_holder_offset_y = offset_y
+        self.update_hand_holder_position()

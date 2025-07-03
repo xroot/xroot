@@ -51,20 +51,27 @@ class Player:
 
     def draw_hand(self, surface, display_manager):
         """
-        Dessine la main du joueur sur le surface donnée.
+        Dessine la main du joueur sur la surface donnée, en suivant la position du chevalet.
         """
         if not self.hand:
             return
-        # Point de départ horizontal
+
+        # Décalage du chevalet vers la droite et vers le haut
+        display_manager.set_hand_holder_offset(1, 20)
+
+        # Point de départ horizontal pour le dessin des pièces (légèrement décalé pour centrer dans le chevalet)
         x_start = display_manager.hand_holder_x + 0.25 * display_manager.tile_size
 
-        # Décalage vertical affiné (au centre du fond du chevalet)
+        # Décalage vertical pour aligner les pièces avec le fond du chevalet
         y = display_manager.hand_holder_y + 0.25 * display_manager.tile_size
+
+        # Espacement entre les pièces (tuile + marge)
+        spacing = int(display_manager.tile_size * 1.1)
 
         for i, letter_sprite in enumerate(self.hand.sprites()):
             if letter_sprite:
                 letter_sprite.rect.topleft = (
-                    x_start + i * display_manager.tile_size,
+                    x_start + i * spacing,
                     y
                 )
                 surface.blit(letter_sprite.image, letter_sprite.rect)
