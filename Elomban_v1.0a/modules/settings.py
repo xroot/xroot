@@ -21,6 +21,7 @@ REFERENCE_TILE_SIZE = 60  # La taille de nos images de tuile de base (qualité d
 # --- AUTRES PARAMÈTRES DE JEU ---
 FPS = 60
 ACTIVE_LANGUAGE = "douala"
+NUMBER_OF_LETTERS_PER_HAND = 8
 
 # --- COULEURS (RGB) ---
 # Gardons-les ici pour un accès facile
