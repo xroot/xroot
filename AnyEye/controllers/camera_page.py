@@ -31,7 +31,7 @@ class CameraPage(QWidget):
 
         # Initialiser le détecteur de visages de OpenCV
         # Assure-toi que le fichier haarcascade_frontalface_default.xml est accessible
-        self.face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+        self.face_cascade = cv2.CascadeClassifier('data/haarcascades/haarcascade_frontalface_default.xml')
 
     def start_camera(self):
         if self.cap is None:
