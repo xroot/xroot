@@ -1,0 +1,56 @@
+RAPPORT DE PROJET - iAme.xyz
+
+Résumé
+------
+iAme.xyz est un projet Python basé sur LangChain + ChromaDB qui vise à construire un assistant IA local utilisant des documents vectorisés. L'approche est modulaire et orientée IA personnelle/localisée.
+
+Partie : Fait (Done)
+---------------------
+- Structure de base : Fichiers bien organisés : séparation du code, des dépendances, et des données
+- ChromaDB local : Utilisation d’une base vectorielle locale prête à l’emploi
+- Assistant IA : Fichier assistant.py chargé du cœur logique LangChain
+- .env présent : Prévu pour sécuriser les clés API
+- Requirements bien définis : langchain, openai, tiktoken, chromadb, etc.
+- Persistance vectorielle : Le projet génère et stocke bien les embeddings
+
+Partie : À faire (ToDo)
+------------------------
+- Créer une interface utilisateur : Aucun front-end ou chatbot visible. Ajouter une interface (ex: Gradio, Streamlit, Web, Telegram, etc.)
+- Gestion dynamique des documents : Ajouter une fonction de mise à jour/ajout via interface ou upload
+- Séparer la logique assistant / UI : Créer des sous-modules (services/, agents/, etc.)
+- Ajouter gestion d’erreurs/logs : Intégrer logging, blocs try/except, journalisation
+- Compléter la documentation : Ajouter un README clair pour usage local ou en production
+
+Suggestions d’amélioration
+---------------------------
+1. Interface Web ou mobile :
+   - Intégrer un front avec Gradio, Streamlit, ou HTML
+   - Ajouter un champ de chat + historique avec scroll
+
+2. Multi-agents / personas :
+   - Développer plusieurs profils (juridique, santé, scolaire, entreprise...)
+   - Ajouter une couche RAG dynamique avec prompts spécifiques
+
+3. Ingestion dynamique :
+   - Interface pour ajouter de nouveaux documents à vectoriser
+   - Support des formats : PDF, TXT, DOCX, Markdown, etc.
+
+4. Distribution :
+   - Créer un .exe ou .app pour usage hors ligne (via PyInstaller)
+   - Packager le projet dans un conteneur Docker
+
+Tests et sécurité
+------------------
+- Fournir un fichier .env.example sans clés réelles
+- Vérifier que l’assistant fonctionne totalement en mode hors-ligne si souhaité
+- Nettoyer le dépôt : le dossier chroma_db/ peut être initialisé dynamiquement
+
+Résumé final
+------------
+Critère                    | État
+---------------------------|---------
+Fonctionnel local IA       | OK
+Persistance vectorielle    | OK
+Interface utilisateur      | Manquante
+Architecture modulaire     | À améliorer
+Documentation              | Vide
